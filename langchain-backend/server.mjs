@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(
 	cors({
-		origin: "http://localhost:5173", // Your Vite frontend URL
+		origin: ["http://localhost:5173", "https://your-app-name.vercel.app", process.env.FRONTEND_URL],
 		methods: ["GET", "POST"],
 		credentials: true,
 		allowedHeaders: ["Content-Type"],
@@ -61,9 +61,9 @@ app.use((err, req, res, next) => {
 });
 
 // Update the server listening code
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app
-	.listen(PORT, () => {
+	.listen(PORT, "0.0.0.0", () => {
 		console.log(`Server running on http://localhost:${PORT}`);
 	})
 	.on("error", (e) => {
